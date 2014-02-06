@@ -356,7 +356,7 @@ class Router extends Backbone.Router
                       name = item.data['location'].join()
                     if item.prototype is "survey"
                       g= item.data
-                      if g[Object.keys(g)[0]] is '1' then correct++ else incorrect++
+                      correct += Number( g[Object.keys(g)[0]] )
                   dt = on
                   collections.each (collection)->
                     dt = off if collection.get('state') == name

@@ -88,8 +88,7 @@ class QuestionRunView extends Backbone.View
       
       else
         checkOrRadio = if @type == "multiple" then "checkbox" else "radio"
-        @options.sort ->
-          return .5 - Math.random()
+
         for option, i in @options
           html += "
             <label for='#{@cid}_#{@name}_#{i}'>#{option.label}</label>
