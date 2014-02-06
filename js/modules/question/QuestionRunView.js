@@ -111,9 +111,6 @@ QuestionRunView = (function(_super) {
         }
       } else {
         checkOrRadio = this.type === "multiple" ? "checkbox" : "radio";
-        this.options.sort(function() {
-          return .5 - Math.random();
-        });
         _ref1 = this.options;
         for (i = _i = 0, _len = _ref1.length; _i < _len; i = ++_i) {
           option = _ref1[i];

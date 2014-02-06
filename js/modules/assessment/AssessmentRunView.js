@@ -18,7 +18,6 @@ AssessmentRunView = (function(_super) {
     this.index = 0;
     this.model = options.model;
     this.orderMap = [];
-    this.j = [];
     Tangerine.activity = "assessment run";
     this.subtestViews = [];
     this.model.subtests.sort();
@@ -34,14 +33,9 @@ AssessmentRunView = (function(_super) {
       this.orderMap = sequences[Math.floor(Math.random() * sequences.length)];
       this.orderMap[this.orderMap.length] = this.orderMap.length;
     } else {
-      this.orderMap[0] = 0;
-      this.orderMap[1] = 1;
-      for (i = _i = 2, _ref1 = this.subtestViews.length - 1; 2 <= _ref1 ? _i <= _ref1 : _i >= _ref1; i = 2 <= _ref1 ? ++_i : --_i) {
-        this.j.push(i);
+      for (i = _i = 0, _ref1 = this.subtestViews.length; 0 <= _ref1 ? _i <= _ref1 : _i >= _ref1; i = 0 <= _ref1 ? ++_i : --_i) {
+        this.orderMap[i] = i;
       }
-      this.j = _.shuffle(this.j);
-      this.orderMap = this.orderMap.concat(this.j);
-      this.orderMap[this.subtestViews.length] = this.subtestViews.length;
     }
     this.result = new Result({
       assessmentId: this.model.id,
