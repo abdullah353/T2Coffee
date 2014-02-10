@@ -12,12 +12,15 @@ AssessmentRunView = (function(_super) {
   }
 
   AssessmentRunView.prototype.initialize = function(options) {
-    var hasSequences, i, resultView, sequences, _i, _ref1,
+    var hasSequences, i, resultView, sequences, _i, _j, _ref1, _ref2,
       _this = this;
+    console.log("Ooptions Fro Assessmenr Run View is");
     this.abortAssessment = false;
     this.index = 0;
     this.model = options.model;
+    this.handler = this.model.get("handler");
     this.orderMap = [];
+    this.cary = [];
     Tangerine.activity = "assessment run";
     this.subtestViews = [];
     this.model.subtests.sort();
@@ -33,15 +36,32 @@ AssessmentRunView = (function(_super) {
       this.orderMap = sequences[Math.floor(Math.random() * sequences.length)];
       this.orderMap[this.orderMap.length] = this.orderMap.length;
     } else {
-      for (i = _i = 0, _ref1 = this.subtestViews.length; 0 <= _ref1 ? _i <= _ref1 : _i >= _ref1; i = 0 <= _ref1 ? ++_i : --_i) {
-        this.orderMap[i] = i;
+      if (!this.handler) {
+        for (i = _i = 0, _ref1 = this.subtestViews.length; 0 <= _ref1 ? _i <= _ref1 : _i >= _ref1; i = 0 <= _ref1 ? ++_i : --_i) {
+          this.orderMap[i] = i;
+          this.result = new Result({
+            assessmentId: this.model.id,
+            assessmentName: this.model.get("name"),
+            blank: true
+          });
+        }
+      } else {
+        this.orderMap[0] = 0;
+        this.orderMap[1] = 1;
+        for (i = _j = 2, _ref2 = this.subtestViews.length - 1; 2 <= _ref2 ? _j <= _ref2 : _j >= _ref2; i = 2 <= _ref2 ? ++_j : --_j) {
+          this.cary.push(i);
+        }
+        this.cary = _.shuffle(this.cary);
+        this.orderMap = this.orderMap.concat(this.cary);
+        this.orderMap[this.subtestViews.length] = this.subtestViews.length;
+        this.result = new Result({
+          assessmentId: this.model.id,
+          assessmentName: this.model.get("name"),
+          ref: this.orderMap,
+          blank: true
+        });
       }
     }
-    this.result = new Result({
-      assessmentId: this.model.id,
-      assessmentName: this.model.get("name"),
-      blank: true
-    });
     if (hasSequences) {
       this.result.set({
         "order_map": this.orderMap

@@ -1,11 +1,13 @@
 class AssessmentRunView extends Backbone.View
   
   initialize: (options) ->
-
+    console.log "Ooptions Fro Assessmenr Run View is"
     @abortAssessment = false
     @index = 0
     @model = options.model
+    @handler = @model.get "handler"
     @orderMap = []
+    @cary = []
 
     Tangerine.activity = "assessment run"
     @subtestViews = []
@@ -22,14 +24,27 @@ class AssessmentRunView extends Backbone.View
       @orderMap = sequences[Math.floor(Math.random() * sequences.length)]
       @orderMap[@orderMap.length] = @orderMap.length
     else
-      for i in [0..@subtestViews.length]
-        @orderMap[i] = i
-
-    @result = new Result
-      assessmentId   : @model.id
-      assessmentName : @model.get "name"
-      blank          : true
-    
+      if(!@handler)
+        for i in [0..@subtestViews.length]
+          @orderMap[i] = i
+          @result = new Result
+            assessmentId   : @model.id
+            assessmentName : @model.get "name"
+            blank          : true
+      else
+        @orderMap[0]=0
+        @orderMap[1]=1
+        for i in [2..@subtestViews.length-1]
+          @cary.push i
+        @cary = _.shuffle @cary
+        @orderMap = @orderMap.concat @cary
+        @orderMap[@subtestViews.length]=@subtestViews.length
+        @result = new Result
+          assessmentId   : @model.id
+          assessmentName : @model.get "name"
+          ref            : @orderMap
+          blank          : true
+      
     if hasSequences then @result.set("order_map" : @orderMap)
       
     resultView = new ResultView

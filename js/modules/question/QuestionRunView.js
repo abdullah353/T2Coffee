@@ -26,7 +26,10 @@ QuestionRunView = (function(_super) {
   };
 
   QuestionRunView.prototype.initialize = function(options) {
+    console.log("Ooptions Fro Question Run View is");
     this.model = options.model;
+    this.handler = this.model.get("handler");
+    console.log(this.handler);
     this.answer = {};
     this.name = this.model.escape("name").replace(/[^A-Za-z0-9_]/g, "-");
     this.type = this.model.get("type");
@@ -111,6 +114,9 @@ QuestionRunView = (function(_super) {
         }
       } else {
         checkOrRadio = this.type === "multiple" ? "checkbox" : "radio";
+        if (this.handler) {
+          this.options = _.shuffle(this.options);
+        }
         _ref1 = this.options;
         for (i = _i = 0, _len = _ref1.length; _i < _len; i = ++_i) {
           option = _ref1[i];

@@ -425,12 +425,17 @@ class Router extends Backbone.Router
                 view = new AssessmentRunView 
                   model: assessment
                 view.result = result
+                view.orderMap = result.get "ref"
                 view.subtestViews.pop()
                 view.subtestViews.push new ResultView
                   model          : result
                   assessment     : assessment
                   assessmentView : view
                 view.index = result.get("subtestData").length
+                date = new Date()
+                curDate = new Date()
+                while curDate-date < 3000
+                  curDate = new Date()
                 vm.show view
       isUnregistered: (options) ->
         Tangerine.router.navigate "login", true

@@ -558,11 +558,7 @@ Router = (function(_super) {
                       }
                       if (item.prototype === "survey") {
                         g = item.data;
-                        if (g[Object.keys(g)[0]] === '1') {
-                          return correct++;
-                        } else {
-                          return incorrect++;
-                        }
+                        return correct += Number(g[Object.keys(g)[0]]);
                       }
                     });
                     dt = true;
@@ -674,11 +670,12 @@ Router = (function(_super) {
             });
             return result.fetch({
               success: function(result) {
-                var view;
+                var curDate, date, view;
                 view = new AssessmentRunView({
                   model: assessment
                 });
                 view.result = result;
+                view.orderMap = result.get("ref");
                 view.subtestViews.pop();
                 view.subtestViews.push(new ResultView({
                   model: result,
@@ -686,6 +683,11 @@ Router = (function(_super) {
                   assessmentView: view
                 }));
                 view.index = result.get("subtestData").length;
+                date = new Date();
+                curDate = new Date();
+                while (curDate - date < 3000) {
+                  curDate = new Date();
+                }
                 return vm.show(view);
               }
             });
