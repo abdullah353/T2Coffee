@@ -74,7 +74,6 @@ class StudentToDateView extends Backbone.View
           @flotArrays[bucketKey].push [parseInt(part), Math.ave.apply(this, percentages)]
           if parseInt(part) == @currentIndex
             @percentagesByStudent[bucketKey] = percentages
-    console.log @percentagesByStudent
 
     @warnings = Tangerine.ReportWarnings["StudentToDateView"]
       percentages : @percentagesByStudent

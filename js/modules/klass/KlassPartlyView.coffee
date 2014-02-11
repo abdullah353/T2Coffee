@@ -27,7 +27,6 @@ class KlassPartlyView extends Backbone.View
     val = @$el.find("#current_part").val()
     if val == "" then return
     @currentPart = parseInt(val)
-    console.log @$el.find("#current_part").val()
     @updateGridPage()
 
   update: ->

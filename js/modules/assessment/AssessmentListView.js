@@ -174,6 +174,9 @@ AssessmentListView = (function(_super) {
   };
 
   AssessmentListView.prototype.onClose = function() {
+    if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry|IEMobile)/)) {
+      document.removeEventListener("backbutton", exchk, false);
+    }
     return this.closeViews();
   };
 

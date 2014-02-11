@@ -26,10 +26,8 @@ QuestionRunView = (function(_super) {
   };
 
   QuestionRunView.prototype.initialize = function(options) {
-    console.log("Ooptions Fro Question Run View is");
     this.model = options.model;
     this.handler = this.model.get("handler");
-    console.log(this.handler);
     this.answer = {};
     this.name = this.model.escape("name").replace(/[^A-Za-z0-9_]/g, "-");
     this.type = this.model.get("type");

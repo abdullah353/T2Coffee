@@ -38,7 +38,7 @@ SubtestEditView = (function(_super) {
     })) {
       return this.cancelEnumerator();
     } else {
-      return console.log("save error");
+
     }
   };
 
@@ -66,7 +66,7 @@ SubtestEditView = (function(_super) {
     })) {
       return this.cancelStudent();
     } else {
-      return console.log("save error");
+
     }
   };
 
@@ -124,7 +124,6 @@ SubtestEditView = (function(_super) {
         Utils.midAlert("Subtest Saved");
         return setTimeout(this.goBack, 1000);
       } else {
-        console.log("save error");
         return Utils.midAlert("Save error");
       }
     }

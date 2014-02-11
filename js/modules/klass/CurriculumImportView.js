@@ -41,7 +41,6 @@ CurriculumImportView = (function(_super) {
           keys: [dKey],
           success: function(data) {
             var curriculumName, datum, doc, subtests, _i, _len, _ref1;
-            console.log(data);
             subtests = 0;
             curriculumName = "";
             _ref1 = data.rows;

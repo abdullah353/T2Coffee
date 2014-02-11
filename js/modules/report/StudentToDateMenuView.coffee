@@ -16,7 +16,6 @@ class StudentToDateMenuView extends Backbone.View
         @students = collection.where 
           klassId : @klass.id
         @ready = true
-        console.log collection
         @render()
 
   render: ->

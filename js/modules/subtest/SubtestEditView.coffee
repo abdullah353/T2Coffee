@@ -22,7 +22,7 @@ class SubtestEditView extends Backbone.View
     if @model.save( "enumeratorHelp" : @$el.find("textarea#enumerator_help").val(), wait : true )
       @cancelEnumerator()
     else
-      console.log ("save error")
+      #console.log ("save error")
 
   cancelEnumerator: ->
     $preview = $("div.enumerator_help_preview")
@@ -42,7 +42,7 @@ class SubtestEditView extends Backbone.View
     if @model.save( "studentDialog" : @$el.find("textarea#student_dialog").val(), wait : true )
       @cancelStudent()
     else
-      console.log ("save error")
+      #console.log ("save error")
 
   cancelStudent: ->
     $preview = $("div.student_dialog_preview")
@@ -88,7 +88,7 @@ class SubtestEditView extends Backbone.View
         Utils.midAlert "Subtest Saved"
         setTimeout @goBack, 1000
       else
-        console.log "save error"
+        #console.log "save error"
         Utils.midAlert "Save error"
       
   render: ->

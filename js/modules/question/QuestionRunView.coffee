@@ -12,10 +12,8 @@ class QuestionRunView extends Backbone.View
     @trigger "scroll", event, @model.get("order")
 
   initialize: (options) ->
-    console.log "Ooptions Fro Question Run View is"
     @model = options.model
     @handler = @model.get "handler"
-    console.log @handler
     @answer   = {}
     @name     = @model.escape("name").replace /[^A-Za-z0-9_]/g, "-"
     @type     = @model.get "type"

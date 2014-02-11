@@ -433,7 +433,10 @@ Router = (function(_super) {
                 "curricula": curricula,
                 "group": group
               });
-              return vm.show(assessments);
+              vm.show(assessments);
+              if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry|IEMobile)/)) {
+                return document.addEventListener("backbutton", exchk, false);
+              }
             }
           });
         },
@@ -528,7 +531,6 @@ Router = (function(_super) {
     return Tangerine.user.verify({
       isRegistered: function() {
         var Collections, collections, results, total;
-        $('#content').slideUp();
         Collections = Backbone.Collection.extend();
         collections = new Collections();
         results = new Results();
@@ -539,8 +541,7 @@ Router = (function(_super) {
             return results.fetch({
               key: id,
               success: function(data) {
-                var dataSource, ob;
-                $('#graph').slideDown();
+                var a, dataSource, ob;
                 ob = {};
                 data.each(function(model, index) {
                   return ob[index] = model.get("subtestData");
@@ -576,51 +577,8 @@ Router = (function(_super) {
                   }
                 });
                 dataSource = collections.toJSON();
-                return $("#chartContainer").dxChart({
-                  dataSource: dataSource,
-                  commonSeriesSettings: {
-                    argumentField: "state",
-                    type: "bar",
-                    hoverMode: "allArgumentPoints",
-                    selectionMode: "allArgumentPoints",
-                    label: {
-                      connector: {
-                        visible: true
-                      },
-                      showForZeroValues: true,
-                      visible: true
-                    }
-                  },
-                  valueAxis: {
-                    title: 'Percentages Result'
-                  },
-                  series: [
-                    {
-                      valueField: "correct",
-                      name: "correct"
-                    }
-                  ],
-                  title: "Percentage Result Report",
-                  legend: {
-                    verticalAlignment: "bottom",
-                    horizontalAlignment: "center"
-                  },
-                  pointClick: function(point) {
-                    return this.select();
-                  },
-                  commonAxisSettings: {
-                    label: {
-                      font: {
-                        color: 'black',
-                        size: 15
-                      },
-                      overlappingBehavior: {
-                        mode: 'rotate',
-                        rotationAngle: 80
-                      }
-                    }
-                  }
-                });
+                a = new Resultd(dataSource);
+                return vm.show(a);
               }
             });
           }
@@ -670,12 +628,14 @@ Router = (function(_super) {
             });
             return result.fetch({
               success: function(result) {
-                var curDate, date, view;
+                var view;
                 view = new AssessmentRunView({
                   model: assessment
                 });
                 view.result = result;
-                view.orderMap = result.get("ref");
+                if (assessment.get("handler")) {
+                  view.orderMap = result.get("ref");
+                }
                 view.subtestViews.pop();
                 view.subtestViews.push(new ResultView({
                   model: result,
@@ -683,11 +643,13 @@ Router = (function(_super) {
                   assessmentView: view
                 }));
                 view.index = result.get("subtestData").length;
-                date = new Date();
-                curDate = new Date();
-                while (curDate - date < 3000) {
-                  curDate = new Date();
-                }
+                /*
+                date = new Date()
+                curDate = new Date()
+                while curDate-date < 3000
+                  curDate = new Date()
+                */
+
                 return vm.show(view);
               }
             });
@@ -1062,7 +1024,10 @@ Router = (function(_super) {
       isUnregistered: function() {
         var view;
         view = new LoginView;
-        return vm.show(view);
+        vm.show(view);
+        if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry|IEMobile)/)) {
+          return document.addEventListener("backbutton", exchk, false);
+        }
       }
     });
   };

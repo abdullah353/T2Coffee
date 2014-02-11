@@ -14,7 +14,6 @@ AssessmentRunView = (function(_super) {
   AssessmentRunView.prototype.initialize = function(options) {
     var hasSequences, i, resultView, sequences, _i, _j, _ref1, _ref2,
       _this = this;
-    console.log("Ooptions Fro Assessmenr Run View is");
     this.abortAssessment = false;
     this.index = 0;
     this.model = options.model;
@@ -39,11 +38,6 @@ AssessmentRunView = (function(_super) {
       if (!this.handler) {
         for (i = _i = 0, _ref1 = this.subtestViews.length; 0 <= _ref1 ? _i <= _ref1 : _i >= _ref1; i = 0 <= _ref1 ? ++_i : --_i) {
           this.orderMap[i] = i;
-          this.result = new Result({
-            assessmentId: this.model.id,
-            assessmentName: this.model.get("name"),
-            blank: true
-          });
         }
       } else {
         this.orderMap[0] = 0;
@@ -54,13 +48,13 @@ AssessmentRunView = (function(_super) {
         this.cary = _.shuffle(this.cary);
         this.orderMap = this.orderMap.concat(this.cary);
         this.orderMap[this.subtestViews.length] = this.subtestViews.length;
-        this.result = new Result({
-          assessmentId: this.model.id,
-          assessmentName: this.model.get("name"),
-          ref: this.orderMap,
-          blank: true
-        });
       }
+      this.result = new Result({
+        assessmentId: this.model.id,
+        assessmentName: this.model.get("name"),
+        ref: this.orderMap,
+        blank: true
+      });
     }
     if (hasSequences) {
       this.result.set({

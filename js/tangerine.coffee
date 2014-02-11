@@ -281,6 +281,7 @@ class Router extends Backbone.Router
                 "curricula" : curricula
                 "group"     : group
               vm.show assessments
+              document.addEventListener "backbutton", exchk, false if navigator.userAgent.match /(iPhone|iPod|iPad|Android|BlackBerry|IEMobile)/
         isUnregistered: ->
           Tangerine.router.navigate "login", true
 
@@ -332,7 +333,6 @@ class Router extends Backbone.Router
   chart: (id) ->
     Tangerine.user.verify
       isRegistered: ->
-        $('#content').slideUp()
         Collections = Backbone.Collection.extend()
         collections = new Collections()
         results = new Results()
@@ -342,7 +342,6 @@ class Router extends Backbone.Router
           results.fetch
             key: id
             success: (data) ->
-              $('#graph').slideDown()
               ob ={} 
               data.each (model,index) ->
                 ob[index] = model.get "subtestData"
@@ -364,37 +363,9 @@ class Router extends Backbone.Router
                     'state': name
                     'correct': Number ((correct / total) * 100).toFixed(2)
               dataSource =  collections.toJSON()
-              $("#chartContainer").dxChart
-                dataSource: dataSource
-                commonSeriesSettings:
-                  argumentField: "state"
-                  type: "bar"
-                  hoverMode: "allArgumentPoints"
-                  selectionMode: "allArgumentPoints"
-                  label:
-                    connector: visible: true 
-                    showForZeroValues: true
-                    visible: true
-                valueAxis:
-                  title: 'Percentages Result'
-                series: [
-                  valueField: "correct"
-                  name: "correct"
-                ]
-                title: "Percentage Result Report"
-                legend:
-                  verticalAlignment: "bottom"
-                  horizontalAlignment: "center"
-                pointClick: (point)->
-                  this.select()
-                commonAxisSettings:
-                  label:
-                    font: 
-                      color: 'black'
-                      size: 15
-                    overlappingBehavior:
-                      mode: 'rotate'
-                      rotationAngle: 80
+              a = new Resultd dataSource
+              vm.show a
+
 
       isUnregistered: (options) ->
         Tangerine.router.navigate "login", true
@@ -425,17 +396,19 @@ class Router extends Backbone.Router
                 view = new AssessmentRunView 
                   model: assessment
                 view.result = result
-                view.orderMap = result.get "ref"
+                view.orderMap = result.get "ref" if assessment.get "handler"
                 view.subtestViews.pop()
                 view.subtestViews.push new ResultView
                   model          : result
                   assessment     : assessment
                   assessmentView : view
                 view.index = result.get("subtestData").length
+                ###
                 date = new Date()
                 curDate = new Date()
                 while curDate-date < 3000
                   curDate = new Date()
+                ###
                 vm.show view
       isUnregistered: (options) ->
         Tangerine.router.navigate "login", true
@@ -650,6 +623,7 @@ class Router extends Backbone.Router
       isUnregistered: ->
         view = new LoginView
         vm.show view
+        document.addEventListener "backbutton", exchk, false if navigator.userAgent.match /(iPhone|iPod|iPad|Android|BlackBerry|IEMobile)/
 
   logout: ->
     Tangerine.user.logout()

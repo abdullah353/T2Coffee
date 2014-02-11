@@ -1,7 +1,6 @@
 class AssessmentRunView extends Backbone.View
   
   initialize: (options) ->
-    console.log "Ooptions Fro Assessmenr Run View is"
     @abortAssessment = false
     @index = 0
     @model = options.model
@@ -27,10 +26,7 @@ class AssessmentRunView extends Backbone.View
       if(!@handler)
         for i in [0..@subtestViews.length]
           @orderMap[i] = i
-          @result = new Result
-            assessmentId   : @model.id
-            assessmentName : @model.get "name"
-            blank          : true
+
       else
         @orderMap[0]=0
         @orderMap[1]=1
@@ -39,11 +35,12 @@ class AssessmentRunView extends Backbone.View
         @cary = _.shuffle @cary
         @orderMap = @orderMap.concat @cary
         @orderMap[@subtestViews.length]=@subtestViews.length
-        @result = new Result
-          assessmentId   : @model.id
-          assessmentName : @model.get "name"
-          ref            : @orderMap
-          blank          : true
+      
+      @result = new Result
+        assessmentId   : @model.id
+        assessmentName : @model.get "name"
+        ref            : @orderMap
+        blank          : true
       
     if hasSequences then @result.set("order_map" : @orderMap)
       

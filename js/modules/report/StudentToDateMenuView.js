@@ -32,7 +32,6 @@ StudentToDateMenuView = (function(_super) {
           klassId: _this.klass.id
         });
         _this.ready = true;
-        console.log(collection);
         return _this.render();
       }
     });

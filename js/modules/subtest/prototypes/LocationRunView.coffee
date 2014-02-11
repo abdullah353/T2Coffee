@@ -231,7 +231,6 @@ class LocationRunView extends Backbone.View
 
   lipend: (event) ->
     key = event.currentTarget.dataset.key if event?.currentTarget?.dataset?.key?
-    console.log key
     index = event.currentTarget.dataset.index if event?.currentTarget?.dataset?.index?
     @licomp()
     $("button.restart-btn").unbind("click").click () ->
@@ -241,10 +240,8 @@ class LocationRunView extends Backbone.View
             doc = 
               _id: "#{data._id}"
               _rev: "#{data._rev}"
-            console.log doc
             Tangerine.$db.removeDoc doc,
               success: (data) ->
-                console.log data
                 $("button.next").trigger "click" 
 
     if $("button.resume-btn").length == 0

@@ -383,7 +383,6 @@ LocationRunView = (function(_super) {
     if ((event != null ? (_ref1 = event.currentTarget) != null ? (_ref2 = _ref1.dataset) != null ? _ref2.key : void 0 : void 0 : void 0) != null) {
       key = event.currentTarget.dataset.key;
     }
-    console.log(key);
     if ((event != null ? (_ref3 = event.currentTarget) != null ? (_ref4 = _ref3.dataset) != null ? _ref4.index : void 0 : void 0 : void 0) != null) {
       index = event.currentTarget.dataset.index;
     }
@@ -397,10 +396,8 @@ LocationRunView = (function(_super) {
               _id: "" + data._id,
               _rev: "" + data._rev
             };
-            console.log(doc);
             return Tangerine.$db.removeDoc(doc, {
               success: function(data) {
-                console.log(data);
                 return $("button.next").trigger("click");
               }
             });

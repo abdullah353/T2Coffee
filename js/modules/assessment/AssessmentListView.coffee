@@ -22,12 +22,12 @@ class AssessmentListView extends Backbone.View
     @views = []
     @publicViews = []
     @refresh()
-  
+
   refresh: ->
     allAssessments = new Assessments
     allAssessments.fetch
       success: (collection) =>
-        # maybe this isn't the best place for a filter
+        # maybe this isnt the best place for a filter
         # only applies to this list
         groupCollection = []
         collection.each (model) =>
@@ -153,4 +153,5 @@ class AssessmentListView extends Backbone.View
       view.close()
 
   onClose: ->
+    document.removeEventListener "backbutton", exchk, false if navigator.userAgent.match /(iPhone|iPod|iPad|Android|BlackBerry|IEMobile)/
     @closeViews()

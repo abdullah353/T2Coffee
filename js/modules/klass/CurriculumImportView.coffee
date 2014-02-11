@@ -34,7 +34,6 @@ class CurriculumImportView extends Backbone.View
         $.couch.db("tangerine").view Tangerine.config.address.designDoc + '/byDKey',
           keys: [dKey]
           success: (data) =>
-            console.log data
             subtests = 0
             curriculumName = ""
             for datum in data.rows
