@@ -16,7 +16,8 @@ LocationRunView = (function(_super) {
     "click .school_list li.licomp": "licomp",
     "click .school_list li.lipend": "lipend",
     "keyup input.search": "showOptions",
-    "click .clear": "clearInputs"
+    "click .clear": "clearInputs",
+    "click .showall": "showAll"
   };
 
   LocationRunView.prototype.initialize = function(options) {
@@ -24,6 +25,7 @@ LocationRunView = (function(_super) {
       _this = this;
     this.pendResAr = [];
     this.compResAr = [];
+    this.all = false;
     this.penNam = [];
     this.penkeys = [];
     this.compNam = [];
@@ -125,6 +127,7 @@ LocationRunView = (function(_super) {
 
   LocationRunView.prototype.autofill = function(event) {
     var i, index, level, location, _i, _len, _ref1, _results;
+    console.log("autofill");
     this.clearMessage();
     this.clearButton();
     $('.tohide').show();
@@ -142,10 +145,11 @@ LocationRunView = (function(_super) {
 
   LocationRunView.prototype.showOptions = function(event) {
     var atLeastOne, field, html, i, isThere, j, needle, otherField, result, results, stack, _i, _j, _k, _l, _len, _len1, _len2, _len3, _m, _ref1, _ref2, _ref3;
+    console.log("showOptions");
     this.clearMessage();
     needle = $(event.target).val().toLowerCase();
-    if (needle === '') {
-      return $('.autofill').hide();
+    if (needle === '' && !this.all) {
+      $('.autofill').hide();
     } else {
       field = parseInt($(event.target).attr('data-level'));
       for (otherField = _i = 0, _ref1 = this.haystack.length; 0 <= _ref1 ? _i <= _ref1 : _i >= _ref1; otherField = 0 <= _ref1 ? ++_i : --_i) {
@@ -156,7 +160,7 @@ LocationRunView = (function(_super) {
       _ref2 = this.haystack;
       for (i = _j = 0, _len = _ref2.length; _j < _len; i = ++_j) {
         stack = _ref2[i];
-        isThere = this.haystack[i][field].search(new RegExp('^' + needle, "i"));
+        isThere = this.all ? 0 : this.haystack[i][field].search(new RegExp('^' + needle, "i"));
         if (isThere === 0) {
           results.push(i);
           atLeastOne = true;
@@ -186,11 +190,12 @@ LocationRunView = (function(_super) {
           html += this.getLocationLi(result);
         }
         this.$el.find("#autofill_" + field).fadeIn(250);
-        return this.$el.find("#school_list_" + field).html(html);
+        this.$el.find("#school_list_" + field).html(html);
       } else {
-        return this.$el.find("#autofill_" + field).fadeOut(250);
+        this.$el.find("#autofill_" + field).fadeOut(250);
       }
     }
+    return this.all = false;
   };
 
   LocationRunView.prototype.getLocationLi = function(i) {
@@ -240,7 +245,7 @@ LocationRunView = (function(_super) {
       level = _ref1[i];
       html = "<input class='search' val='' data-level='" + i + "' id='samSearchBox' placeholder='Search For Student Name'>";
     }
-    html += "      <button class='clear command'>Clear</button>      ";
+    html += "      <button class='clear command'>Clear</button> <button class='showall command'>Show all names</button>      ";
     _ref2 = this.levels;
     for (i = _j = 0, _len1 = _ref2.length; _j < _len1; i = ++_j) {
       level = _ref2[i];
@@ -418,11 +423,18 @@ LocationRunView = (function(_super) {
   LocationRunView.prototype.clearButton = function() {
     $('button.restart-btn').hide();
     $('button.resume-btn').hide();
-    return $('button.next').show();
+    $('button.next').show();
+    return $('.autofill').hide();
   };
 
   LocationRunView.prototype.clearMessage = function() {
     return $('span.message').hide();
+  };
+
+  LocationRunView.prototype.showAll = function() {
+    this.all = true;
+    $('input.search').val("  ");
+    return $('input.search').trigger("keyup");
   };
 
   return LocationRunView;

@@ -6,10 +6,12 @@ class LocationRunView extends Backbone.View
     "click .school_list li.lipend" : "lipend"
     "keyup input.search"  : "showOptions"
     "click .clear" : "clearInputs"
+    "click .showall": "showAll"
     
   initialize: (options) ->
     @pendResAr = []
     @compResAr = []
+    @all = off
     @penNam =[]
     @penkeys=[]
     @compNam = []
@@ -79,6 +81,7 @@ class LocationRunView extends Backbone.View
       @$el.find("#level_#{i}").val("")
 
   autofill: (event) ->
+    console.log "autofill"
     @clearMessage()
     @clearButton()
     $('.tohide').show()
@@ -90,9 +93,10 @@ class LocationRunView extends Backbone.View
 
 
   showOptions: (event) ->
+    console.log "showOptions"
     @clearMessage()
     needle = $(event.target).val().toLowerCase()
-    if needle == ''
+    if needle == '' and !@all
       $('.autofill').hide()
     else
       field = parseInt($(event.target).attr('data-level'))
@@ -103,7 +107,7 @@ class LocationRunView extends Backbone.View
       atLeastOne = false
       results = []
       for stack, i in @haystack
-        isThere = @haystack[i][field].search new RegExp('^'+needle, "i")
+        isThere = if @all then 0 else @haystack[i][field].search new RegExp('^'+needle, "i")
         if isThere == 0
           results.push i 
           atLeastOne = true
@@ -125,6 +129,7 @@ class LocationRunView extends Backbone.View
 
       else
         @$el.find("#autofill_#{field}").fadeOut(250)
+    @all = off
 
   getLocationLi: (i) ->
     templateInfo = "i" : i
@@ -154,7 +159,7 @@ class LocationRunView extends Backbone.View
     	html = "<input class='search' val='' data-level='#{i}' id='samSearchBox' placeholder='Search For Student Name'>"
 
     html += "
-      <button class='clear command'>Clear</button>
+      <button class='clear command'>Clear</button> <button class='showall command'>Show all names</button>
       ";
 
     for level, i in @levels
@@ -204,7 +209,7 @@ class LocationRunView extends Backbone.View
       incorrect : 0
       missing   : 0
       total     : 0
-      
+
     for input in @$el.find("input")
       $input = $(input)
       counts['correct']   += 1 if ($input.val()||"") != ""
@@ -255,6 +260,11 @@ class LocationRunView extends Backbone.View
     $('button.restart-btn').hide()
     $('button.resume-btn').hide()
     $('button.next').show()
+    $('.autofill').hide()
 
   clearMessage: ->
     $('span.message').hide()
+  showAll:->
+    @all = on
+    $('input.search').val("  ")
+    $('input.search').trigger("keyup")
