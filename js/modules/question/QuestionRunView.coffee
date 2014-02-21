@@ -100,6 +100,10 @@ class QuestionRunView extends Backbone.View
     else
       @$el.hide()
 
+    console.log "Rendered HUB"
+    setTimeout () ->
+      MathJax.Hub.Queue(["Typeset",MathJax.Hub])
+    ,500
 
     @trigger "rendered"
   
