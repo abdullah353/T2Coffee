@@ -86,7 +86,8 @@ AssessmentRunView = (function(_super) {
         this.$el.find('#progressCount').html("" + (this.index - 1) + "/" + (this.model.subtests.length - 1));
       }
       currentView.on("rendered", function() {
-        return _this.trigger("rendered");
+        _this.trigger("rendered");
+        return typeof currentView.afterRender === "function" ? currentView.afterRender() : void 0;
       });
       currentView.on("subRendered", function() {
         return _this.trigger("subRendered");

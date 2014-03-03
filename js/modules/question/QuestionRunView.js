@@ -128,10 +128,6 @@ QuestionRunView = (function(_super) {
     } else {
       this.$el.hide();
     }
-    console.log("Rendered HUB");
-    setTimeout(function() {
-      return MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
-    }, 500);
     return this.trigger("rendered");
   };
 

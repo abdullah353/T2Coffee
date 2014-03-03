@@ -105,3 +105,6 @@ class SubtestRunView extends Backbone.View
   
   skip: ->
     @parent.skip()
+
+  afterRender:->
+    MathJax.Hub.Queue(["Typeset",MathJax.Hub])

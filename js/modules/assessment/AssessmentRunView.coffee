@@ -65,7 +65,9 @@ class AssessmentRunView extends Backbone.View
       @$el.find('#progress').progressbar value : ( ( @index-1  ) / ( @model.subtests.length - 1  ) * 100 ) if @index+1 > 2
       @$el.find('#progressCount').html  "#{@index-1}/#{@model.subtests.length - 1}" if @index+1 > 2
 
-      currentView.on "rendered", => @trigger "rendered"
+      currentView.on "rendered", => 
+        @trigger "rendered"
+        currentView.afterRender?()
       currentView.on "subRendered", => @trigger "subRendered"
 
       currentView.render()

@@ -1,5 +1,5 @@
 onDeviceReady=()->
-     document.addEventListener "online", onOnline, false
+  document.addEventListener "online", onOnline, false
 onOnline = () ->
   $.couch.replicate Tangerine.config.address.local.dbName, Tangerine.config.address.cloud.host + "/" + Tangerine.config.address.cloud.dbName, 
     success: () ->
