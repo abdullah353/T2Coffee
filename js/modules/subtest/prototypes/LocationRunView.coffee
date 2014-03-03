@@ -81,7 +81,6 @@ class LocationRunView extends Backbone.View
       @$el.find("#level_#{i}").val("")
 
   autofill: (event) ->
-    console.log "autofill"
     @clearMessage()
     @clearButton()
     $('.tohide').show()
@@ -93,7 +92,6 @@ class LocationRunView extends Backbone.View
 
 
   showOptions: (event) ->
-    console.log "showOptions"
     @clearMessage()
     needle = $(event.target).val().toLowerCase()
     if needle == '' and !@all

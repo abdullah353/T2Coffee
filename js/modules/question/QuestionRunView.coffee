@@ -100,7 +100,6 @@ class QuestionRunView extends Backbone.View
     else
       @$el.hide()
 
-
     @trigger "rendered"
   
   defineSpecialCaseResults: ->

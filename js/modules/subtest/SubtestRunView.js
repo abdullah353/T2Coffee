@@ -153,6 +153,10 @@ SubtestRunView = (function(_super) {
     return this.parent.skip();
   };
 
+  SubtestRunView.prototype.afterRender = function() {
+    return MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+  };
+
   return SubtestRunView;
 
 })(Backbone.View);

@@ -127,7 +127,6 @@ LocationRunView = (function(_super) {
 
   LocationRunView.prototype.autofill = function(event) {
     var i, index, level, location, _i, _len, _ref1, _results;
-    console.log("autofill");
     this.clearMessage();
     this.clearButton();
     $('.tohide').show();
@@ -145,7 +144,6 @@ LocationRunView = (function(_super) {
 
   LocationRunView.prototype.showOptions = function(event) {
     var atLeastOne, field, html, i, isThere, j, needle, otherField, result, results, stack, _i, _j, _k, _l, _len, _len1, _len2, _len3, _m, _ref1, _ref2, _ref3;
-    console.log("showOptions");
     this.clearMessage();
     needle = $(event.target).val().toLowerCase();
     if (needle === '' && !this.all) {
