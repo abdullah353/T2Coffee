@@ -65,6 +65,7 @@ class NavigationView extends Backbone.View
 
     @$el.html "
     <img id='corner_logo' src='images/corner_logo.png'>
+    <div id='appver'>v1.3.1</div>
     <div id='logout_link'>#{t('logout')}</div>
     <div id='enumerator_box'>
       #{t('enumerator')}

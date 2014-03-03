@@ -89,7 +89,7 @@ NavigationView = (function(_super) {
   NavigationView.prototype.render = function() {
     var updateButton;
     updateButton = Tangerine.user.isAdmin() && Tangerine.settings.context !== "server" ? "<a href='#update'>" + (t('update')) + "</a>" : "";
-    this.$el.html("    <img id='corner_logo' src='images/corner_logo.png'>    <div id='logout_link'>" + (t('logout')) + "</div>    <div id='enumerator_box'>      " + (t('enumerator')) + "      <div id='enumerator'>" + (Tangerine.user.name || "") + "</div>    </div>    <div id='current_student'>      Student ID      <div id='current_student_id'></div>    </div>    <div id='version'>    version <br/>    <span id='version-uuid'>" + Tangerine.version + "</span><br/>    " + updateButton + "    </div>    ");
+    this.$el.html("    <img id='corner_logo' src='images/corner_logo.png'>    <div id='appver'>v1.3.1</div>    <div id='logout_link'>" + (t('logout')) + "</div>    <div id='enumerator_box'>      " + (t('enumerator')) + "      <div id='enumerator'>" + (Tangerine.user.name || "") + "</div>    </div>    <div id='current_student'>      Student ID      <div id='current_student_id'></div>    </div>    <div id='version'>    version <br/>    <span id='version-uuid'>" + Tangerine.version + "</span><br/>    " + updateButton + "    </div>    ");
     $("body").ajaxStart(function() {
       return $("#corner_logo").attr("src", "images/spin_orange.gif");
     });
